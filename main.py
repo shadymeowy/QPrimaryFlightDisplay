@@ -62,12 +62,15 @@ class GCSGraphics(QWidget):
         self.arm = False
         self.battery = 0
         self.debug = False
-        self.scale = 2
+        self.zoom = 1
         QApplication.instance().paletteChanged.connect(self.update_style)
         self.update_style()
 
     def update_style(self, palette=None):
         palette = palette or self.palette()
+        self.dpi = min(self.logicalDpiX(), self.logicalDpiY())
+        self.scale = (self.dpi/96) * self.zoom
+        z = self.zoom
         s = self.scale
         self.fg = palette.color(QPalette.WindowText)
         self.fg2 = QPen(self.fg, 2*s)
@@ -97,11 +100,14 @@ class GCSGraphics(QWidget):
         #self.ground = QColor(0x6c, 0x57, 0x35)
         self.sky = palette.color(QPalette.Base)
         self.ground = palette.color(QPalette.Window)
-        self.font12 = QFont("Arial", 12*s)
-        self.font16 = QFont("Arial", 16*s)
-        self.font20 = QFont('Arial', 20*s)
+        self.font12 = QFont("Arial", 12*z)
+        self.font16 = QFont("Arial", 16*z)
+        self.font20 = QFont('Arial', 20*z)
 
     def paintEvent(self, e):
+        dpi = min(self.logicalDpiX(), self.logicalDpiY())
+        if dpi != self.dpi:
+            self.update_style()
         painter = QPainter()
         self.painter = painter
         painter.begin(self)
@@ -183,7 +189,8 @@ class GCSGraphics(QWidget):
         for i in range(l1, l2+1):
             pos = -i*per+v*r
             if (i % 2) == 0:
-                painter.drawLine(QLineF(x1, (y1+y2)/2+pos,  x1+15*s, (y1+y2)/2+pos))
+                painter.drawLine(
+                    QLineF(x1, (y1+y2)/2+pos,  x1+15*s, (y1+y2)/2+pos))
                 painter.drawText(
                     QRectF(
                         x1+18*s,
@@ -195,7 +202,8 @@ class GCSGraphics(QWidget):
                     str(int(round(abs(i*inc))))
                 )
             else:
-                painter.drawLine(QLineF(x1, (y1+y2)/2+pos,  x1+8*s, (y1+y2)/2+pos))
+                painter.drawLine(
+                    QLineF(x1, (y1+y2)/2+pos,  x1+8*s, (y1+y2)/2+pos))
         painter.restore()
         painter.setBrush(self.bsbr)
         painter
@@ -245,7 +253,8 @@ class GCSGraphics(QWidget):
         for i in range(l1, l2+1):
             pos = -i*per+v*r
             if (i % 2) == 0:
-                painter.drawLine(QLineF(x1, (y1+y2)/2+pos,  x1+25*s, (y1+y2)/2+pos))
+                painter.drawLine(
+                    QLineF(x1, (y1+y2)/2+pos,  x1+25*s, (y1+y2)/2+pos))
                 painter.drawText(
                     QRectF(
                         x1+33*s,
@@ -257,7 +266,8 @@ class GCSGraphics(QWidget):
                     str(i*inc)
                 )
             else:
-                painter.drawLine(QLineF(x1, (y1+y2)/2+pos,  x1+15*s, (y1+y2)/2+pos))
+                painter.drawLine(
+                    QLineF(x1, (y1+y2)/2+pos,  x1+15*s, (y1+y2)/2+pos))
             for j in range(-5, 6):
                 painter.drawLine(QLineF(x1, (y1+y2)/2+pos+j/5*per,
                                  x1+8*s, (y1+y2)/2+pos+j/5*per))
@@ -310,7 +320,8 @@ class GCSGraphics(QWidget):
         for i in range(l1, l2+1):
             pos = -i*per+v*r
             if (i % 2) == 0:
-                painter.drawLine(QLineF(x2, (y1+y2)/2+pos,  x2-25*s, (y1+y2)/2+pos))
+                painter.drawLine(
+                    QLineF(x2, (y1+y2)/2+pos,  x2-25*s, (y1+y2)/2+pos))
                 painter.drawText(
                     QRectF(
                         x1,
@@ -322,7 +333,8 @@ class GCSGraphics(QWidget):
                     str(i*inc)
                 )
             else:
-                painter.drawLine(QLineF(x2, (y1+y2)/2+pos,  x2-15*s, (y1+y2)/2+pos))
+                painter.drawLine(
+                    QLineF(x2, (y1+y2)/2+pos,  x2-15*s, (y1+y2)/2+pos))
         painter.restore()
         painter.setBrush(self.bsbr)
         painter.drawPolygon([
