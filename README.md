@@ -14,3 +14,11 @@ Then clone the repository
 Simply change the MAVLink connection string if needed and run the main.py.
 
 `python main.py`
+
+# Dependencies
+- Python 3.9.6
+- Dronekit: https://github.com/dronekit/dronekit-python
+- PySide2: https://wiki.qt.io/Qt_for_Python
+
+or
+- PyQt5: https://riverbankcomputing.com/software/pyqt/download
