@@ -9,6 +9,17 @@ except:
     from PyQt5.QtWidgets import *
     from PyQt5.QtGui import *
     from PyQt5.QtCore import *
+    _old = QPainter.drawPolygon
+
+    def _new(s, p):
+        if isinstance(p, list):
+            poly = QPolygonF()
+            for ps in p:
+                poly.append(ps)
+            return _old(s, poly)
+        else:
+            return _old(s, p)
+    QPainter.drawPolygon = _new
 from dronekit import connect
 
 
