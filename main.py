@@ -13,14 +13,14 @@ except:
     from PyQt5.QtCore import *
 
     # PyQt5'in QPainter.drawPolygon metodunu liste alabilmesi için düzelt.
-    _old = QPainter.drawPolygon # Eski metodu sakla.
+    _old = QPainter.drawPolygon  # Eski metodu sakla.
 
     # Yeni metodu tanımla.
     def _new(s, p):
         # Verilen obje liste mi diye kontrol et.
         if isinstance(p, list):
             # Liste yerine metoda verilecek QPolygon objesini oluştur.
-            poly = QPolygonF() # Metoda geçecek QPolygon objesi
+            poly = QPolygonF()  # Metoda geçecek QPolygon objesi
             # Listedeki tüm noktalar için dön.
             for ps in p:
                 # Verilen noktayı QPolygon objesine ekle
@@ -36,38 +36,70 @@ except:
 from dronekit import connect
 
 
+# Arayüzün gösterileceği pencere sınıfını tanımla.
 class Form(QDialog):
 
+    # Pencere oluşturulduğunda çağırılan metod
     def __init__(self, parent=None):
+        # Sınıfın miras alındığı sınıfın metodunu çağır.
         super(Form, self).__init__(parent)
+        # Pencerenin başlığını değiştir.
         self.setWindowTitle("Göksat Uçuş Arayüzü")
-        layout = QGridLayout()
-        self.gcsgraphics = GCSGraphics()
+        # Çizim komponentinin konulacağı layoutu oluştur.
+        layout = QGridLayout()  # Pencerinin komponentlerini düzene koyan layout
+        # Tüm çizimi yapacak olan komponenti oluştur.
+        self.gcsgraphics = GCSGraphics()  # Çizimleri yapan komponent
+        # Çizim komponentini layouta ekle.
         layout.addWidget(self.gcsgraphics, 0, 0, 1, 1)
+        # Pencerinin layoutunu ayarla.
         self.setLayout(layout)
+        # Pencerenin başlangıç posizyonunu bozmadan başlangıç boyutunu değiştir.
         self.setGeometry(self.geometry().x(), self.geometry().y(), 1000, 800)
-        self.timer = QTimer()
+        # Telemetri verilerini periyodik olarak kontrol edecek zamanlayıcıyı oluştur.
+        self.timer = QTimer()  # Zamanlayıcı objesi
+        # Zamanlayıcının çağırması gereken metodu bağla.
         self.timer.timeout.connect(self.update_widget)
+        # Zamanlayıcının saniyede 60 kez çalışmasını sağla.
         self.timer.start(1000/60)
+        # MAVLink bağlantısını kur.
+        # Bağlantıyı saklayan Vehicle sınıfından obje.
         self.vehicle = connect("udp:127.0.0.1:14552", wait_ready=True)
 
+    # Telemetri verilerini güncelleyecek olan metod.
     def update_widget(self):
+        # Telemetri verilerini kurulan bağlantıdan çizim komponentini güncelle.
+        # Burada bazı birim ve yön düzeltmeleri de yapılmaktadır.
+        # Çizim objesindeki yatış açısını güncelle.
         self.gcsgraphics.bank = -self.vehicle.attitude.roll
+        # Çizim objesindeki pitch açısını güncelle.
         self.gcsgraphics.pitch = self.vehicle.attitude.pitch
+        # Çizim objesindeki yönelimi güncelle.
         self.gcsgraphics.heading = -self.vehicle.heading*pi/180
+        # Çizim objesindeki hava süratini güncelle.
         self.gcsgraphics.airspeed = self.vehicle.airspeed
+        # Çizim objesindeki irtifayı güncelle.
         self.gcsgraphics.alt = self.vehicle.location.global_relative_frame.alt
+        # Çizim objesindeki düşey sürati güncelle.
         self.gcsgraphics.vspeed = -self.vehicle.velocity[-1]
+        # Çizim objesindeki dönüş kayış değerini güncelle.
         self.gcsgraphics.skipskid = 0
+        # Çizim objesindeki arm durumunu güncelle.
         self.gcsgraphics.arm = self.vehicle.armed
+        # İHA'dan batarya bilgisi geliyor mu diye kontrol et.
         if self.gcsgraphics.battery != None:
+            # Çizim objesindeki pil seviyesini güncelle.
             self.gcsgraphics.battery = self.vehicle.battery.level
         else:
+            # Eğer pil seviyesi telemetri bilgilerinde yoksa çizim objesindeki pil seviyesi bilgisini 0 olarak ata.
             self.gcsgraphics.battery = 0
+        # Pencere ve içerisindeki tüm komponentlerin tekrardan çizdirilmesini sağla.
         self.update()
 
+    # Pencere kapatıldığında çağırılan metod.
     def closeEvent(self, event):
+        # Pencerinin kapanmasıyla bağlantıyı da kapat.
         self.vehicle.close()
+        # Pencerinin kapatılması olayını kabul et.
         event.accept()
 
 
