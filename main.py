@@ -1,6 +1,8 @@
+# Gerekli standart kütüphaneleri dahil et.
 import sys
 from math import cos, tan, pi, sin
 
+# İlk önce PySide2 sarmalını daha sonra PyQt5 sarmalını dahil etmeyi dene.
 try:
     from PySide2.QtWidgets import *
     from PySide2.QtGui import *
@@ -9,6 +11,8 @@ except:
     from PyQt5.QtWidgets import *
     from PyQt5.QtGui import *
     from PyQt5.QtCore import *
+
+    # PyQt5'in QPainter.drawPolygon metodunu liste alabilmesi için düzelt.
     _old = QPainter.drawPolygon
 
     def _new(s, p):
@@ -20,6 +24,8 @@ except:
         else:
             return _old(s, p)
     QPainter.drawPolygon = _new
+
+# İHA ile MAVLink bağlantısını sağlayan dronekit kütüphanesini dahil et.
 from dronekit import connect
 
 
