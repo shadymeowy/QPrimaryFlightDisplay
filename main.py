@@ -1,3 +1,5 @@
+# Göksat uçuş arayüzü, daha fazla bilgi için https://github.com/shadymeowy/goksatpfd
+
 # Gerekli standart kütüphaneleri dahil et.
 import sys
 from math import cos, tan, pi, sin
