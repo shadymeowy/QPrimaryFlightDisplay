@@ -887,17 +887,9 @@ class GCSGraphics(QWidget):
         # Merkez işaretçinin merkezinde bulunan daire çizdirilir.
         painter.drawEllipse(w/2-4, h/2-4, 8*s, 8*s)
 
-    def draw_inf_marker(self, p, b):
-        painter = self.painter
-        w = self.width
-        h = self.height
-        s = self.scale
-        x1, y1, x2, y2 = self.compute_horizon(p, b)
-        painter.drawLine(QLineF(x1, y1, x2, y2))
-
     # Bu metod durum cayrosundaki ufuk çizgisinin başlangıç ve bitiş
     # noktalarını hesaplar.
-    # Bu metod parametre olarak çizim komponentinin kendisini, 
+    # Bu metod parametre olarak çizim komponentinin kendisini,
     # pitch açısı (p) ve yatış açısı (b)  alır.
     # Ufuk çizgisinin başlangıç ve bitiş noktalarının koordinlarını
     # 4 elementli bir tuple olarak döndürür.
@@ -1081,9 +1073,9 @@ class GCSGraphics(QWidget):
 if __name__ == '__main__':
     # Programa verilen komut satırı argümanlarından yeni bir uygulama
     # objesi oluştur.
-    app = QApplication(sys.argv) # Uygulama objesi
+    app = QApplication(sys.argv)  # Uygulama objesi
     # En başta tanımlanan Form sınıfından arayüz penceresi oluşturulur.
-    form = Form() # Arayüz penceresi
+    form = Form()  # Arayüz penceresi
     # Arayüzü görünür hale getir.
     form.show()
     # Uygulamayı başlat ve döndürülen çıkış koduyla programı da sonlandır.
