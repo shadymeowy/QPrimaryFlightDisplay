@@ -13,15 +13,22 @@ except:
     from PyQt5.QtCore import *
 
     # PyQt5'in QPainter.drawPolygon metodunu liste alabilmesi için düzelt.
-    _old = QPainter.drawPolygon
+    _old = QPainter.drawPolygon # Eski metodu sakla.
 
+    # Yeni metodu tanımla.
     def _new(s, p):
+        # Verilen obje liste mi diye kontrol et.
         if isinstance(p, list):
-            poly = QPolygonF()
+            # Liste yerine metoda verilecek QPolygon objesini oluştur.
+            poly = QPolygonF() # Metoda geçecek QPolygon objesi
+            # Listedeki tüm noktalar için dön.
             for ps in p:
+                # Verilen noktayı QPolygon objesine ekle
                 poly.append(ps)
+            # Oluşturulan QPolygon objesiyle metodun kaydedilen halini çağır.
             return _old(s, poly)
         else:
+            # Verilen obje liste olmadığı için modifikasyon yapmadan metodun kaydedilen halini çağır.
             return _old(s, p)
     QPainter.drawPolygon = _new
 
