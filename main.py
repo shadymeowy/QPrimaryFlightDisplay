@@ -96,8 +96,6 @@ class GCSGraphics(QWidget):
         self.err3.setJoinStyle(Qt.RoundJoin)
         self.err3.setCapStyle(Qt.RoundCap)
         self.pst = QColor(0x27, 0xae, 0x60)
-        #self.sky = QColor(0x55, 0xa6, 0xd0)
-        #self.ground = QColor(0x6c, 0x57, 0x35)
         self.sky = palette.color(QPalette.Base)
         self.ground = palette.color(QPalette.Window)
         self.font12 = QFont("Arial", 12*z)
