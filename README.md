@@ -1,4 +1,4 @@
-# goksatpfd
+# goksat-pfd
 Göksat Space Team Primary Flight Display
 
 # Installation
