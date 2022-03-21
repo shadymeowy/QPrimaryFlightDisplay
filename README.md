@@ -16,9 +16,13 @@ Simply change the MAVLink connection string if needed and run the main.py.
 `python main.py`
 
 # Dependencies
-- Python 3.9.6
+- Python 3.9
 - Dronekit: https://github.com/dronekit/dronekit-python
 - PySide2: https://wiki.qt.io/Qt_for_Python
 
 or
 - PyQt5: https://riverbankcomputing.com/software/pyqt/download
+
+# Screenshots
+![alt text](./screenshots/screenshot_1.png)
+![alt text](./screenshots/screenshot_2.png)
