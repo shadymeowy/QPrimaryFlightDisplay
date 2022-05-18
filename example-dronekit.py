@@ -2,13 +2,13 @@ from dronekit import connect
 import sys
 
 try:
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
+    from PySide6.QtCore import *
+except:
     from PySide2.QtWidgets import *
     from PySide2.QtGui import *
     from PySide2.QtCore import *
-except:
-    from PyQt5.QtWidgets import *
-    from PyQt5.QtGui import *
-    from PyQt5.QtCore import *
 
 from QPrimaryFlightDisplay import QPrimaryFlightDisplay
 
@@ -30,6 +30,8 @@ vehicle = connect("udp:127.0.0.1:14551", wait_ready=True)
 # Create a callback to run regularly while the vehicle is connected
 # It is used to update the display of the vehicle state
 # Redrawing the display is fast enough to be done in real time
+
+
 def update():
     # Update the display of the vehicle state
     pfd.roll = vehicle.attitude.roll
@@ -46,6 +48,7 @@ def update():
         pfd.battery = 0
     # Redraw the display
     pfd.update()
+
 
 # Create a timer to update the display of the vehicle state
 timer = QTimer()

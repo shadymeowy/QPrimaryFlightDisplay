@@ -1,28 +1,23 @@
-# goksat-pfd
-Göksat Space Team Primary Flight Display
+# QPrimaryFlightDisplay
 
-# Installation
-Install dependencies via
+T-standard compliant primary flight display widget for showing realtime flight data.
 
-`pip install PySide2 dronekit`
+# Features
 
-Then clone the repository
-
-`git clone https://github.com/shadymeowy/goksatpfd.git`
-
-# Usage
-Simply change the MAVLink connection string if needed and run the main.py.
-
-`python main.py`
+- It provides a single display with standard flight instruments.
+- Automatically uses current Qt theme to draw the display.
+- Arbitrary display ratios and UI scaling is supported.
+- Easy to use and easy to embed (see examples).
+- Custom widget created using the drawing primitives, only base Qt framework is required.
+- CPU usage is kept low as much as possible.
 
 # Dependencies
-- Python 3.9
-- Dronekit: https://github.com/dronekit/dronekit-python
-- PySide2: https://wiki.qt.io/Qt_for_Python
+Any of the following dependencies are required:
 
-or
-- PyQt5: https://riverbankcomputing.com/software/pyqt/download
+- PySide2 or PySide6: https://wiki.qt.io/Qt_for_Python
 
 # Screenshots
 ![alt text](./screenshots/screenshot_1.png)
 ![alt text](./screenshots/screenshot_2.png)
+![alt text](./screenshots/screenshot_3.png)
+![alt text](./screenshots/screenshot_4.png)

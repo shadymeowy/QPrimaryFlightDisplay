@@ -1,24 +1,13 @@
 from math import cos, radians, tan, pi, sin
 
 try:
+    from PySide6.QtWidgets import *
+    from PySide6.QtGui import *
+    from PySide6.QtCore import *
+except:
     from PySide2.QtWidgets import *
     from PySide2.QtGui import *
     from PySide2.QtCore import *
-except:
-    from PyQt5.QtWidgets import *
-    from PyQt5.QtGui import *
-    from PyQt5.QtCore import *
-    _old = QPainter.drawPolygon
-
-    def _new(s, p):
-        if isinstance(p, list):
-            poly = QPolygonF()
-            for ps in p:
-                poly.append(ps)
-            return _old(s, poly)
-        else:
-            return _old(s, p)
-    QPainter.drawPolygon = _new
 
 
 class QPrimaryFlightDisplay(QWidget):
