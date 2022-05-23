@@ -1,6 +1,6 @@
 # QPrimaryFlightDisplay
 
-T-standard compliant primary flight display widget for showing realtime flight data.
+T-standard compliant primary flight display widget for showing realtime flight data
 
 # Features
 
@@ -15,6 +15,22 @@ T-standard compliant primary flight display widget for showing realtime flight d
 Any of the following dependencies are required:
 
 - PySide2 or PySide6: https://wiki.qt.io/Qt_for_Python
+
+# Installation
+
+Clone the repository and install the package using pip,
+
+```
+git clone https://github.com/shadymeowy/QPrimaryFlightDisplay
+pip install QPrimaryFlightDisplay/
+```
+
+or simply install directly from the GitHub repository,
+
+```
+pip install git+https://github.com/shadymeowy/QPrimaryFlightDisplay
+```
+
 
 # Screenshots
 ![alt text](./screenshots/screenshot_1.png)
