@@ -59,4 +59,7 @@ timer.start(1000 / 60)
 
 # Start the application
 pfd.show()
-sys.exit(app.exec_())
+try:
+    sys.exit(app.exec())
+except AttributeError:
+    sys.exit(app.exec_())

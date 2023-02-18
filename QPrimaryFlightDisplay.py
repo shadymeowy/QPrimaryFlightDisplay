@@ -1,16 +1,29 @@
+import os
+import sys
+
 from math import cos, radians, tan, pi, sin
 
 try:
     from PySide6.QtWidgets import *
     from PySide6.QtGui import *
     from PySide6.QtCore import *
-except:
+    from PySide6.QtOpenGL import *
+    from PySide6.QtOpenGLWidgets import *
+except ImportError:
     from PySide2.QtWidgets import *
     from PySide2.QtGui import *
     from PySide2.QtCore import *
+    from PySide2.QtOpenGL import *
 
 
-class QPrimaryFlightDisplay(QWidget):
+if "NO_GL" in os.environ and os.environ["NO_GL"] == "1":
+    print("NO_GL is set, using QWidget instead of QOpenGLWidget", file=sys.stderr)
+    WidgetClass = QWidget
+else:
+    WidgetClass = QOpenGLWidget
+
+
+class QPrimaryFlightDisplay(WidgetClass):
     def __init__(self, parent=None):
         super(QPrimaryFlightDisplay, self).__init__(parent)
         self.pitch = 0
@@ -23,6 +36,11 @@ class QPrimaryFlightDisplay(QWidget):
         self.battery = 0
         self.arm = False
         self.zoom = 1
+        if WidgetClass == QOpenGLWidget:
+            self.setAutoFillBackground(False)
+            fmt = QSurfaceFormat()
+            fmt.setSamples(8)
+            self.setFormat(fmt)
         QApplication.instance().paletteChanged.connect(self.update_style)
         self.update_style()
 
@@ -557,4 +575,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     pfd = QPrimaryFlightDisplay()
     pfd.show()
-    sys.exit(app.exec_())
+    try:
+        sys.exit(app.exec())
+    except AttributeError:
+        sys.exit(app.exec_())

@@ -9,7 +9,9 @@ T-standard compliant primary flight display widget for showing realtime flight d
 - Arbitrary display ratios and UI scaling is supported.
 - Easy to use and easy to embed (see examples).
 - Custom widget created using the drawing primitives, only base Qt framework is required.
-- CPU usage is kept low as much as possible.
+- Can be used as a standalone application or as a widget in a larger application.
+- Supports both PySide2 and PySide6.
+- Now with support OpenGL rendering for better performance.
 
 # Dependencies
 Any of the following dependencies are required:
