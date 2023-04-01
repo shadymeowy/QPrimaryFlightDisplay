@@ -108,30 +108,33 @@ class QPrimaryFlightDisplay(WidgetClass):
         h = self.geometry().height()
         s = self.scale
         painter = self.painter
-        painter.setBrush(self.bsbr)
-        painter.setPen(self.fg2)
-        rect = QRectF(w - 100 * s, h - 50 * s, 100 * s, 50 * s)
-        painter.drawRect(rect)
-        painter.setBrush(self.hg)
-        painter.setPen(self.hg)
-        painter.drawRect(w - 98 * s, h - 48 * s, (96 * s) * (self.battery / 100), 46 * s)
-        painter.setFont(self.font16)
-        painter.setPen(self.fg)
-        painter.drawText(rect, Qt.AlignCenter, f"{round(self.battery)}%")
-        painter.setBrush(self.bsbr)
-        painter.setPen(self.fg2)
-        rect = QRectF(0, h - 50 * s, 100 * s, 50 * s)
-        painter.drawRect(rect)
-        painter.setBrush(self.pst if self.arm else self.err)
-        painter.setPen(self.pst if self.arm else self.err)
-        painter.drawRect(2 * s, h - 48 * s, 96 * s, 46 * s)
-        painter.setFont(self.font16)
-        painter.setPen(self.fg)
-        painter.drawText(
-            rect,
-            Qt.AlignCenter,
-            "Armed" if self.arm else "Disarmed"
-        )
+        if self.battery is not None:
+            painter.setBrush(self.bsbr)
+            painter.setPen(self.fg2)
+            rect = QRectF(w - 100 * s, h - 50 * s, 100 * s, 50 * s)
+            painter.drawRect(rect)
+            painter.setBrush(self.hg)
+            painter.setPen(self.hg)
+            painter.drawRect(w - 98 * s, h - 48 * s, (96 * s) * (self.battery / 100), 46 * s)
+            painter.setFont(self.font16)
+            painter.setPen(self.fg)
+            painter.drawText(rect, Qt.AlignCenter, f"{round(self.battery)}%")
+
+        if self.arm is not None:
+            painter.setBrush(self.bsbr)
+            painter.setPen(self.fg2)
+            rect = QRectF(0, h - 50 * s, 100 * s, 50 * s)
+            painter.drawRect(rect)
+            painter.setBrush(self.pst if self.arm else self.err)
+            painter.setPen(self.pst if self.arm else self.err)
+            painter.drawRect(2 * s, h - 48 * s, 96 * s, 46 * s)
+            painter.setFont(self.font16)
+            painter.setPen(self.fg)
+            painter.drawText(
+                rect,
+                Qt.AlignCenter,
+                "Armed" if self.arm else "Disarmed"
+            )
 
     def draw_vspeed(self):
         painter = self.painter
@@ -331,6 +334,8 @@ class QPrimaryFlightDisplay(WidgetClass):
         w = self.geometry().width()
         h = self.geometry().height()
         s = self.scale
+        if self.heading is None:
+            return
         hd = -radians(self.heading)
         x = min(4 * w / 16, 4 * h / 16)
         painter.setPen(self.fg3)
@@ -504,18 +509,21 @@ class QPrimaryFlightDisplay(WidgetClass):
             y1 = h + 1
             x2 = 0
             y2 = -1
-        if y1 > h:
-            x1 = (h / 2 - p / cos(b)) / tan(b) + w / 2
-            y1 = h
-        elif y1 < 0:
-            x1 = (-h / 2 - p / cos(b)) / tan(b) + w / 2
-            y1 = 0
-        if y2 > h:
-            x2 = (h / 2 - p / cos(b)) / tan(b) + w / 2
-            y2 = h
-        elif y2 < 0:
-            x2 = (-h / 2 - p / cos(b)) / tan(b) + w / 2
-            y2 = 0
+        try:
+            if y1 > h:
+                x1 = (h / 2 - p / cos(b)) / tan(b) + w / 2
+                y1 = h
+            elif y1 < 0:
+                x1 = (-h / 2 - p / cos(b)) / tan(b) + w / 2
+                y1 = 0
+            if y2 > h:
+                x2 = (h / 2 - p / cos(b)) / tan(b) + w / 2
+                y2 = h
+            elif y2 < 0:
+                x2 = (-h / 2 - p / cos(b)) / tan(b) + w / 2
+                y2 = 0
+        except ZeroDivisionError:
+            pass
         return x1, y1, x2, y2
 
     def draw_region(self, sky=False):
