@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "QPrimaryFlightDisplay"
+version = "1.0.0a1"
+description = "T-standard compliant primary flight display widget for showing realtime flight data"
+authors = [{name = "Tolga Demirdal"}]
+readme = "README.md"
+license = {file = "LICENSE"}
+dependencies = ["PySide6"]
+
+[project.urls]
+Homepage = "https://github.com/shadymeowy/QPrimaryFlightDisplay"
+Repository = "https://github.com/shadymeowy/QPrimaryFlightDisplay"
