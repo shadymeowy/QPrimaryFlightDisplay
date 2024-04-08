@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "QPrimaryFlightDisplay"
-version = "1.0.0a1"
+version = "1.0.0a2"
 description = "T-standard compliant primary flight display widget for showing realtime flight data"
 authors = [{name = "Tolga Demirdal"}]
 readme = "README.md"

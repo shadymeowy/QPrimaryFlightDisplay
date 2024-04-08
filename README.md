@@ -13,26 +13,30 @@ T-standard compliant primary flight display widget for showing realtime flight d
 - Supports both PySide2 and PySide6.
 - Now with support OpenGL rendering for better performance.
 
-# Dependencies
-Any of the following dependencies are required:
-
-- PySide2 or PySide6: https://wiki.qt.io/Qt_for_Python
-
 # Installation
+
+## Using pip
+
+Install the package using pip,
+
+```
+pip install QPrimaryFlightDisplay
+```
+
+## Build from source
 
 Clone the repository and install the package using pip,
 
 ```
 git clone https://github.com/shadymeowy/QPrimaryFlightDisplay
-pip install QPrimaryFlightDisplay/
+cd QPrimaryFlightDisplay
+pip install .
 ```
 
-or simply install directly from the GitHub repository,
+# Dependencies
+While PySide6 is the recommended backend, PySide2 is also supported.
 
-```
-pip install git+https://github.com/shadymeowy/QPrimaryFlightDisplay
-```
-
+- PySide2 or PySide6: https://wiki.qt.io/Qt_for_Python
 
 # Screenshots
 ![alt text](./screenshots/screenshot_1.png)
