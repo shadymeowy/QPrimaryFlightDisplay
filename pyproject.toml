@@ -14,3 +14,6 @@ dependencies = ["PySide6"]
 [project.urls]
 Homepage = "https://github.com/shadymeowy/QPrimaryFlightDisplay"
 Repository = "https://github.com/shadymeowy/QPrimaryFlightDisplay"
+
+[tool.setuptools]
+py-modules = ["QPrimaryFlightDisplay"]
